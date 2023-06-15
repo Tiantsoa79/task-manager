@@ -1,33 +1,16 @@
-import create from 'zustand';
+import { useState, useEffect } from "react";
 
-const useTaskManager = create((set) => ({
-  tasks: [],
+const useLocalStorage = (key, initialValue) => {
+  const [value, setValue] = useState(() => {
+    const storedValue = localStorage.getItem(key);
+    return storedValue ? JSON.parse(storedValue) : initialValue;
+  });
 
-  searchTask: (searchTerm) => {
-    set((state) => ({
-      tasks: state.tasks.filter((task) =>
-        task.title.toLowerCase().includes(searchTerm.toLowerCase())
-      ),
-    }));
-  },
+  useEffect(() => {
+    localStorage.setItem(key, JSON.stringify(value));
+  }, [key, value]);
 
-  addTask: (newTask) => {
-    set((state) => ({ tasks: [...state.tasks, newTask] }));
-  },
+  return [value, setValue];
+};
 
-  updateTask: (taskId, updatedTask) => {
-    set((state) => ({
-      tasks: state.tasks.map((task) =>
-        task.id === taskId ? { ...task, ...updatedTask } : task
-      ),
-    }));
-  },
-
-  deleteTask: (taskId) => {
-    set((state) => ({
-      tasks: state.tasks.filter((task) => task.id !== taskId),
-    }));
-  },
-}));
-
-export { useTaskManager };
+export { useLocalStorage };
