@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useRef } from 'react';
 import { useState } from 'react';
 import Head from 'next/head';
-import useTaskManager from '../hooks/useTaskManager';
+import { useEffect } from 'react';
+import useTaskManager from '../store/useTaskManager';
 import useLocalStorage from '../hooks/useLocalStorage';
 
 interface Task {
@@ -9,20 +10,6 @@ interface Task {
   title: string,
   completed: boolean,
 }
-
-const TaskManager = () => {
-  // const createTaskRef = ...:
-  // const {
-  //   tasks,
-  //   searchTask,
-  //   addTask,
-  //   updateTask,
-  //   deleteTask,
-  //   setSearchTask,
-  // } = useTaskManager();
-
-
-
 
 
 const TaskManager = () => {
